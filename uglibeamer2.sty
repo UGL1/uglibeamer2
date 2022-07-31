@@ -1,0 +1,101 @@
+% uglixbeamer v2
+%
+% 2022-08
+%
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{uglibeamer2}
+\RequirePackage[french]{babel}
+\RequirePackage{minted}   
+\RequirePackage{hyperref}
+\RequirePackage[normalem]{ulem}
+
+
+%------- number printing
+\RequirePackage{numprint}
+\newcommand{\np}{\numprint}
+
+
+%------- colors
+\RequirePackage{xcolor}
+\RequirePackage{colortbl}
+\input{uglibeamer-colors.tex}
+
+%------- links
+\hypersetup{pdfborder = 0 0 0}
+\urlstyle{same}
+\newcommand{\link}[2]{\href{#1}{\color{TolDarkBlue}#2}}
+
+%------- options
+\newif\if@withtikz \@withtikzfalse
+\DeclareOption{withtikz}{\@withtikztrue}
+
+\newif\if@withmath \@withmathfalse
+\DeclareOption{withmath}{\@withmathtrue}
+
+
+\DeclareOption*{}
+\ProcessOptions
+
+\if@withmath
+    %------- base maths
+    \usepackage[d]{esvect}
+    \input{uglibeamer-math.tex}
+\fi
+
+\if@withtikz
+    %------- tikz
+    \RequirePackage{ifthen}
+    \RequirePackage{xargs}
+    \RequirePackage{tikz}
+    \usetikzlibrary{shadows,decorations.pathmorphing,calc,backgrounds}
+    \input{uglibeamer-tikz.tex}
+\fi
+
+%------- code related
+\newcommand{\pythoninline}[1]{\mintinline{python}{#1}}
+
+
+%------- specific beamer formatting
+\usetheme[progressbar=frametitle]{metropolis}
+\setbeamertemplate{footline}
+{
+    \leavevmode
+    \hbox{
+        \begin{beamercolorbox}[wd=.15\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}
+            \usebeamerfont{author in head/foot}\insertshortauthor
+        \end{beamercolorbox}
+        
+        \begin{beamercolorbox}[wd=.7\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}
+            \usebeamerfont{author in head/foot}\insertshorttitle
+        \end{beamercolorbox}
+        
+        \begin{beamercolorbox}[wd=.15\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}
+            \insertframenumber{} / \inserttotalframenumber
+        \end{beamercolorbox}
+    }
+}
+\makeatletter
+\setlength{\metropolis@progressinheadfoot@linewidth}{2pt}
+\makeatother
+\setbeamercolor{progress bar in section page}{use=progress bar,parent=progress bar}
+\setbeamertemplate{footline}
+{
+    \leavevmode
+    \hbox{
+        \begin{beamercolorbox}[wd=.15\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}
+            \usebeamerfont{author in head/foot}\insertshortauthor
+        \end{beamercolorbox}
+        
+        \begin{beamercolorbox}[wd=.7\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}
+            \usebeamerfont{author in head/foot}\insertshorttitle
+        \end{beamercolorbox}
+        
+        \begin{beamercolorbox}[wd=.15\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}
+            \insertframenumber{} / \inserttotalframenumber
+        \end{beamercolorbox}
+    }
+}
+\metroset{block=fill}
+
+
+
